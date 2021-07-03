@@ -5,8 +5,16 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const moment = require("moment");
 
+var exphbs  = require('express-handlebars');
+
 // members details json
 var app = express();
+
+// HandleBars middleware
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+
 
 // getting logger middleware
 const logger1 = require("./middleware/logger1")
