@@ -6,7 +6,6 @@ var logger = require("morgan");
 const moment = require("moment");
 
 // members details json
-const Members = require("./Members");
 var app = express();
 
 // getting logger middleware
@@ -15,20 +14,9 @@ const logger1 = require("./middleware/logger1")
 // Init Logger middleware
 // app.use(logger1);
 
-// Gets all members
-app.get("/api/members", (req, res) => res.json(Members));
 
-// Get single member
-app.get('/api/members/:id',(req, res) => {
-  const found = Members.some(user => user.id === parseInt(req.params.id))
-  if(found){
-    res.json(Members.find(user => user.id === parseInt(req.params.id)))
-  }else{
-    res.status(400).json({msg:`No member with the id of ${req.params.id}`})
-  }
-
-})
-
+// Members api routes
+app.use('/api/members',require('./routes/api/members'))
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
