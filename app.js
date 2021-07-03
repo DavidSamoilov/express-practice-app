@@ -19,7 +19,13 @@ const logger1 = require("./middleware/logger1")
 app.get("/api/members", (req, res) => res.json(Members));
 
 // Get single member
-app.get('api/members/:id',(req, res) => {
+app.get('/api/members/:id',(req, res) => {
+  const found = Members.some(user => user.id === parseInt(req.params.id))
+  if(found){
+    res.json(Members.find(user => user.id === parseInt(req.params.id)))
+  }else{
+    res.status(400).json({msg:`No member with the id of ${req.params.id}`})
+  }
 
 })
 
