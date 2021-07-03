@@ -14,6 +14,9 @@ const logger1 = require("./middleware/logger1")
 // Init Logger middleware
 // app.use(logger1);
 
+// Body Parser Middleware
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 
 // Members api routes
 app.use('/api/members',require('./routes/api/members'))
