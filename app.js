@@ -4,30 +4,35 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const moment = require("moment");
-
-var exphbs  = require('express-handlebars');
+const members = require('./Members')
+var exphbs = require("express-handlebars");
 
 // members details json
 var app = express();
 
 // HandleBars middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-
+// HomePage Route
+app.get("/", (req, res) => res.render("index",{
+  title:"Member App",
+  members
+}));
 
 // getting logger middleware
-const logger1 = require("./middleware/logger1")
+const logger1 = require("./middleware/logger1");
 
 // Init Logger middleware
 // app.use(logger1);
 
 // Body Parser Middleware
-app.use(express.json())
-app.use(express.urlencoded({extended:false}))
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-// Members api routes
-app.use('/api/members',require('./routes/api/members'))
+
+// Members API Routes
+app.use("/api/members", require("./routes/api/members"));
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -45,8 +50,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
