@@ -3,7 +3,7 @@ const uuid = require("uuid");
 const router = express.Router();
 const Members = require("../../Members");
 const app = require("../../app");
-
+const connection = require("./MySQL")
 
 // Gets all members
 router.get("/", (req, res) => res.json(Members));
